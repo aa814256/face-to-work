@@ -77,4 +77,9 @@ class UserController extends BaseController
         echo 1;
    }
 
+
+   public function test()
+   {
+       echo 'test';
+   }
 }
