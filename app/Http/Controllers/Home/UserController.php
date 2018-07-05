@@ -74,7 +74,7 @@ class UserController extends BaseController
    public function getInfo()
    {
        $user_id = request('id');  //用户主键ID
-
+        echo 1;
    }
 
 }
