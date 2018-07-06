@@ -17,7 +17,8 @@ class User extends Model
     const UPDATED_AT = 'update_time';
 
 
-    protected $fillable = ['username', 'password'];
+    protected $fillable = ['username', 'password', 'nickname'];  //允许赋值的字段
+
 
     protected $table = 'interview_user';
 

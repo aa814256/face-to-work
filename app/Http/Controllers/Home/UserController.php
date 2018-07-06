@@ -9,6 +9,8 @@
 namespace App\Http\Controllers\Home;
 
 
+use App\Http\base\controller\BaseController;
+
 use App\Http\Logic\UserLogic;
 use App\Http\Model\User;
 
@@ -17,7 +19,6 @@ class UserController extends BaseController
     public function index()
     {
         echo 1;die;
-//        return view();
     }
 
     /**
@@ -26,34 +27,18 @@ class UserController extends BaseController
      */
     public function register()
     {
-
-        $rules = [
-            'username' => 'required',
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|min:6'
-        ];
-
         $data = [
-            'username' => request('username'),
-            'password' => request('password'),
-            'password_confirmation' => request('password_confirmation')
+            'username' => request('username', ''),
+            'password' => request('password', ''),
+            'password_confirmation' => request('password_confirmation', ''),
+            'nickname' => request('nickname', '')
         ];
-
-        $message = [
-        'username.required' => '用户名必填',
-        'password.required' => '密码不能为空',
-        'password_confirmation.required' => '请重新输入确认密码'
-        ];
-
-
-        $validator = \Validator::make($data, $rules, $message);
-        if ($validator->fails()){
-            return ['msg' => $validator->errors()->first()];
+        $result = UserLogic::addUser($data);
+        if ($result->code != 0) {
+            return $this->response($result->code, $result->message);
         }
 
-        $user = new User($data);
-        $user->save();
-        return  '成功';
+        return $this->response(0, '成功');
     }
 
     /**
@@ -68,18 +53,30 @@ class UserController extends BaseController
         ];
 
         $result = UserLogic::userLogin($data);
-        return $result;
+
+        if ($result->code != 0) {
+            return $this->response($result->code, $result->message);
+        }
+
+
+        return $this->response(0, '', $result->data);
     }
 
+    /**
+     * 获取作者信息
+     * @return array
+     */
    public function getInfo()
    {
        $user_id = request('id');  //用户主键ID
-        echo 1;
+
+       $result = UserLogic::getById($user_id);
+
+       if ($result->code != 0) {
+           return $this->response($result->code, $result->message);
+       }
+
+       return $this->response(0, '', ['data' => $result->data]);
    }
 
-
-   public function test()
-   {
-       echo 'test';
-   }
 }
