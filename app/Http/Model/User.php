@@ -18,12 +18,13 @@ class User extends Model
 
 
     protected $fillable = ['username', 'password', 'nickname'];  //允许赋值的字段
-
+    protected $hidden = ['password', 'create_time', 'update_time'];
 
     protected $table = 'interview_user';
 
     //时间保存成时间戳
-    public function getDateFormat() {
+    public function getDateFormat()
+    {
         return 'U';
     }
 

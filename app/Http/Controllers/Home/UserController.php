@@ -58,8 +58,7 @@ class UserController extends BaseController
             return $this->response($result->code, $result->message);
         }
 
-
-        return $this->response(0, '', $result->data);
+        return $this->response(0, '', ['data' => $result->data]);
     }
 
     /**
