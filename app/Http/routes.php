@@ -27,29 +27,26 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+
+    Route::any('/question', 'Home\QuestionListController@index');
+    Route::any('/question/query', 'Home\QuestionListController@query');
+
 });
+
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
-    Route::get('/article/index', 'ArticleController@index');
-    Route::get('/article/query/{id?}', 'ArticleController@query');
-    Route::get('/article/save', 'ArticleController@save');
-
-    Route::get('/home/index', 'Home\UserController@index');
-
-});
-
-Route::group(['middleware' => 'web'], function () {
-    Route::auth();
-
     Route::get('/home/index', 'Home\UserController@index');
     Route::get('/home/register', 'Home\UserController@register');
     Route::get('/home/login', 'Home\UserController@login');
     Route::get('/home/getInfo', 'Home\UserController@getInfo');
-
-
+    Route::get('/home/index', 'Home\UserController@index');
 
 });
+
+
+
+
+

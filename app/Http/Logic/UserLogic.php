@@ -7,7 +7,6 @@
  */
 namespace App\Http\Logic;
 
-
 use App\Http\base\Logic\BaseLogic;
 use App\Http\Model\User;
 use App\Http\Model\UserBehavior;
@@ -102,12 +101,16 @@ class UserLogic extends BaseLogic
             return self::error('用户信息不存在');
         }
 
-        //用户点赞收藏总数 (应该还有更好的查询方法  查询两次数据库总感觉很不爽)
-        $user_collect = UserBehavior::where('user_id', $id)->where('type', UserBehavior::TYPE_COLLECT)->count();
-        $user_like = UserBehavior::where('user_id', $id)->where('type', UserBehavior::TYPE_LIKE)->count();
+        //用户点赞收藏总数 type分组   之后匹配
+        $user_behavior = UserBehavior::where('user_id', $id)
+            ->groupBy('type')
+            ->selectRaw('count(*) as count, type')
+            ->pluck('count', 'type')
+            ->toArray();
 
-        $user['collect_count'] = $user_collect;
-        $user['like_count'] = $user_like;
+        $user['collect_count'] = isset($user_behavior[UserBehavior::TYPE_COLLECT]) ? $user_behavior[UserBehavior::TYPE_COLLECT] : 0;
+        $user['like_count'] = isset($user_behavior[UserBehavior::TYPE_LIKE]) ? $user_behavior[UserBehavior::TYPE_LIKE]: 0;
+
 
         return self::success($user);
     }

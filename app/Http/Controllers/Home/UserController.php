@@ -12,7 +12,6 @@ namespace App\Http\Controllers\Home;
 use App\Http\base\controller\BaseController;
 
 use App\Http\Logic\UserLogic;
-use App\Http\Model\User;
 
 class UserController extends BaseController
 {
@@ -67,6 +66,7 @@ class UserController extends BaseController
      */
    public function getInfo()
    {
+
        $user_id = request('id');  //用户主键ID
 
        $result = UserLogic::getById($user_id);
