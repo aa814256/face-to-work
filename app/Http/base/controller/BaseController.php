@@ -15,6 +15,7 @@ class BaseController extends Controller
 {
     protected function build($result = 0, $message = 'success', $data = [])
     {
+        $a = '';
         switch (true) {
             case $result instanceof Result:
                 // For Result类，适用于直接返回Logic的Result
