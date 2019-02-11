@@ -92,6 +92,7 @@ class UserLogic extends BaseLogic
     public static function getById($id)
     {
         $a = '';
+        $test_0211 = 0211;
         if (empty($id)) {
             return self::error('无ID');
         }
