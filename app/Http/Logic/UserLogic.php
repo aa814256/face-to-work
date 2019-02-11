@@ -93,6 +93,7 @@ class UserLogic extends BaseLogic
     {
         $hotfix = 1022;
         $a = '';
+        $test_0211 = 0211;
         if (empty($id)) {
             return self::error('无ID');
         }
