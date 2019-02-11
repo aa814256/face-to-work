@@ -53,6 +53,8 @@ class UserLogic extends BaseLogic
      */
     public static function userLogin($data)
     {
+
+        $cccc = '';
         $rules = [
             'username' => 'required',
             'password' => 'required|min:6',
