@@ -24,6 +24,8 @@ class QuestionListController extends BaseController
          ];
 
         $a = '2208';
+
+        $B = '2227';
         $result = QuestionLogic::getListByHome($condition);
         if ($result->code != 0) {
             return $this->response($result->code, $result->message);
